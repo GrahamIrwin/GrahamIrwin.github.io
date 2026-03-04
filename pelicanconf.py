@@ -1,6 +1,6 @@
 AUTHOR = 'Graham Irwin'
 SITENAME = 'Graham Irwin'
-SITEURL = ""
+SITEURL = "https://GrahamIrwin.github.io"
 
 PATH = "content"
 
@@ -11,6 +11,8 @@ DEFAULT_LANG = 'en'
 THEME = 'themes/Just-Read'
 
 SITESUBTITLE = '"Come what come may, time and the hour runs through the roughest day." — Macbeth (1.3.163-164)'
+
+RELATIVE_URLS = True
 
 # Feed generation is usually not desired when developing
 FEED_ALL_ATOM = None
