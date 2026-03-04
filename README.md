@@ -2,7 +2,7 @@
 
 ## Purpose
 
-This README describes how to format a resume using a lightweight markup language, such as Markdown, and publish it as a static website on forge called GitHub using a static site generator called Pelican. It is written for anyone who is comfortable with a lightweight markup language and has basic understanding of the command line, but has little to no prior experience with Git, static site generators, or forges.
+This README describes how to format a resume using a lightweight markup language, such as Markdown, and publish it as a static website on a forge called GitHub using a static site generator called Pelican. It is written for anyone who is comfortable with a lightweight markup language and has basic understanding of the command line, but has little to no prior experience with Git, static site generators, or forges.
 
 This documentation follows the four core principles Andrew Etter outlines in [*Modern Technical Writing*](https://www.amazon.ca/Modern-Technical-Writing-Introduction-Documentation-ebook/dp/B01A2QL9SS): write content in a lightweight markup language, track it with a distributed version control system, build it with a static site generator, and host it on a forge. Together, these practices produce documentation that is easy to maintain, easy to share, and always up to date.
 
@@ -27,7 +27,7 @@ Before you begin, make sure you have the following:
 
 ### Step 1: Formate your resume in a lightweight markup language like Markdown
 
-Etter reccomends using a **lightweight markup language** for all documentation. Markdown keeps content readable as plain text and works seamlessly with version control tools. GitHub renders Markdown natively, making it an ideal choice for this usecase.
+Etter recommends using a **lightweight markup language** for all documentation. Markdown keeps content readable as plain text and works seamlessly with version control tools. GitHub renders Markdown natively, making it an ideal choice for this usecase.
 
 1. Open your resume in any text editor.
 2. Use Markdown syntax to structure your content: `##` for section headings, `-` for bullet points, `**bold**` for emphasis, and `---` for horizontal bars between sections.
@@ -35,7 +35,7 @@ Etter reccomends using a **lightweight markup language** for all documentation. 
 
 ### Step 2: Install Pelican and ghp-import
 
-Etter recommends using a **static site generator** to transform Markdown files into a polished, publishable website automatically. Pelican is a Python-based static site generator that reads your `.md` files and configuration file, and produces a complete set of HTML pages without having to manually create them.
+Etter recommends using a **static site generator**, which transforms Markdown files into a polished, publishable website automatically. Pelican is a Python-based static site generator that reads your `.md` files and configuration file, and produces a complete set of HTML pages without having to manually create them.
 
 1. Open your terminal.
 2. Install Pelican with Markdown support by running:
