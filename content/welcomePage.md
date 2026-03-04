@@ -1,9 +1,7 @@
 Title: Welcome
 Date: 2026-03-03
 
-# Hi, I'm Graham Irwin!
-
-I'm a computer science student with experience in data analytics, machine learning, and *light* web development.
+Hi, I'm Graham Irwin, a computer science student with experience in data analytics, machine learning, and *light* web development.
 
 --- 
 
