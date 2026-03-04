@@ -40,7 +40,7 @@ Graduated Medium Town High School | [2015 - 2019]
 
 #### Boolean Formula Generator
 - Developed a Python program that generates Boolean formulas based on user-defined parameters
-- Generates Laws of Inference Formulass to be used to create complex logical expressions for educational or testing purposes
+- Generates Laws of Inference Formulas to be used to create complex logical expressions for educational or testing purposes
 #### AI Music Generation
 - Trained a Recursive Neural Network to reproduce music in a certain artist’s style
 - Implemented Google’s Team Magenta Neural Network 
