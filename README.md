@@ -179,4 +179,4 @@ After making changes to your Markdown file, you need to rebuild and redeploy you
 
 **Static Site Generator:** [Pelican](https://getpelican.com/) by David Megginson, [AGNU Affero General Public License v3.0](https://github.com/getpelican/pelican/blob/main/LICENSE)
 
-**Peer Reviewers:** [Name 1, Name 2]
+**Peer Reviewers:** [Zachary Prynne, Ace Zamora]
