@@ -9,15 +9,17 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script src="life.js" defer></script>
 </head>
 <body>
+<canvas id="life" aria-hidden="true"></canvas>
 <div class="screen">
 
 <header class="hero">
   <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> whoami</p>
   <h1>GRAHAM IRWIN</h1>
-  <p class="lede">Honours computer science student (minor in math) at the University of Manitoba. I work on machine learning, data analytics and
-    side projects that probably shouldn't work, like a fruit fly's brain playing Counter-Strike.</p>
+  <p class="lede">Honours computer science, minor math at the University of Manitoba. I work on machine learning, data
+    analytics and side projects that eat up too much of my time.</p>
   <p class="motd"><span class="dim">MOTD:</span> "Come what come may, time and the hour runs through the roughest day."
     <span class="dim">— Macbeth 1.3</span></p>
   <nav>
@@ -56,7 +58,51 @@
 
   <article class="proj">
     <header>
-      <h3><span class="idx">02</span> MTG Vec2Search</h3>
+      <h3><span class="idx">02</span> Discrete Math, Interactive</h3>
+      <p class="status">2026 · <b>OPEN TEXTBOOK</b></p>
+    </header>
+    <p>An open textbook for MATH 1240 Discrete Mathematics, written in PreTeXt as a research assistant on an OER
+      grant. The best part is the interactives, which I built in plain JavaScript so students can try the ideas
+      instead of just reading about them:</p>
+    <ul class="log">
+      <li><b>Graph isomorphism:</b> drag the vertices of a random graph onto the Petersen graph and watch the mapping
+        table fill in.</li>
+      <li><b>Function builder:</b> drag arrows between two sets to build a function, and see right away whether it's
+        injective, surjective or bijective.</li>
+      <li><b>Euclidean algorithm:</b> step through the division steps to gcd(a, b), then the back-substitution that
+        finds x and y with ax + by = gcd(a, b).</li>
+      <li><b>Linear congruence solver:</b> turns ax ≡ c (mod n) into a Diophantine equation and walks through
+        every incongruent solution.</li>
+      <li><b>Also:</b> truth tables, Venn diagrams, number base conversion and password counting.</li>
+    </ul>
+    <ul class="tags"><li>JavaScript</li><li>PreTeXt</li><li>Discrete math</li><li>OER</li></ul>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">03</span> Paper2LaTeX</h3>
+      <p class="status">2026 · <b>V1, EARLY</b></p>
+    </header>
+    <p>Turns photos or PDFs of handwritten math and CS notes into structured LaTeX, entirely offline on a local
+      vision model (Qwen2.5-VL 7B through Ollama). There are no API calls and no per-page cost, and your notes never
+      leave the machine. The goal is structure, not just text: aligned derivations become <code>align*</code> and
+      boxed results become theorem environments.</p>
+    <ul class="log">
+      <li>Flags problems instead of guessing. Unreadable passages get <code>%% UNSURE</code> comments that are
+        collected into a "Review these" page, and hand-drawn diagrams are cropped from the photo and embedded.</li>
+      <li>Checks each photo for blur, low contrast and bad exposure before it reaches the model.</li>
+      <li>Handwriting profiles: photograph one sentence of your writing and the model writes a glossary of your
+        quirks to use on every page.</li>
+      <li>A desktop app styled after Windows 95. Attach the question sheet and each question is boxed above its
+        answer, or ask for edits in plain English. A rewrite is refused if it drops content or gets stuck in a
+        loop.</li>
+    </ul>
+    <ul class="tags"><li>Python</li><li>Ollama</li><li>Vision LLMs</li><li>LaTeX</li><li>Tkinter</li></ul>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">04</span> MTG Vec2Search</h3>
       <p class="status"><b>LIVE</b></p>
     </header>
     <p>Search every Magic: The Gathering card by describing it in plain English ("cheap green elves that ramp"), or
@@ -71,7 +117,7 @@
 
   <article class="proj">
     <header>
-      <h3><span class="idx">03</span> LogicParser</h3>
+      <h3><span class="idx">05</span> LogicParser</h3>
       <p class="status"><b>STABLE</b></p>
     </header>
     <p>A Python toolkit for sentential logic. It checks whether a formula is well formed and finds its main
@@ -83,7 +129,7 @@
 
   <article class="proj">
     <header>
-      <h3><span class="idx">04</span> NEAT Mario</h3>
+      <h3><span class="idx">06</span> NEAT Mario</h3>
       <p class="status">2019 · <b>ARCHIVED</b></p>
     </header>
     <p>Evolved neural networks with NEAT (NeuroEvolution of Augmenting Topologies) to play Super Mario Bros. through
@@ -94,7 +140,7 @@
 
   <article class="proj">
     <header>
-      <h3><span class="idx">05</span> RNN Music</h3>
+      <h3><span class="idx">07</span> RNN Music</h3>
       <p class="status">2018 · <b>ARCHIVED</b></p>
     </header>
     <p>A 2-layer recurrent neural network (LSTM) trained on Scott Joplin ragtime MIDI files to compose new piano pieces
@@ -153,7 +199,7 @@
   <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> cat skills.cfg</p>
   <dl class="kv">
     <dt>LANGUAGES</dt><dd>Python, Java, C#, JavaScript/TypeScript, SQL, Lua, LaTeX</dd>
-    <dt>ML &amp; DATA</dt><dd>PyTorch, TensorFlow, NumPy, pandas, Matplotlib, sparse GPU computation (CUDA)</dd>
+    <dt>ML &amp; DATA</dt><dd>PyTorch, TensorFlow, NumPy, pandas, Matplotlib, CUDA</dd>
     <dt>TOOLS</dt><dd>Git/GitHub, MySQL, BigQuery, Excel</dd>
   </dl>
 </section>
@@ -173,8 +219,12 @@
 </main>
 
 <footer>
-  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> <span class="cursor" aria-hidden="true"></span></p>
-  <p class="dim">[ EOF ] · hand-written HTML &amp; CSS · print this page for a plain resume</p>
+  <form id="term" class="cmd">
+    <label class="ps1" for="cmd">guest@grahamirwin:~$</label>
+    <input id="cmd" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="help">
+  </form>
+  <pre id="term-out" aria-live="polite"></pre>
+  <p class="dim">[ EOF ] · hand-written HTML &amp; CSS · the background is alive, type help · print this page for a plain resume</p>
 </footer>
 
 </div>

@@ -23,6 +23,11 @@ body {
   text-shadow: var(--glow);
 }
 
+/* Game of Life (life.js): fixed behind everything, sized in whole cells so it never scales */
+#life { position: fixed; top: 0; left: 0; z-index: -1; pointer-events: none; }
+
+code { font: inherit; color: var(--bright); }
+
 /* scanlines + vignette, drawn over everything but never clickable */
 body::after {
   content: "";
@@ -137,8 +142,14 @@ h3 { font: 400 26px/1.1 var(--crt); color: var(--bright); margin: 0; letter-spac
 .egg { color: inherit; text-shadow: inherit; }
 
 footer { margin-top: 8px; font-size: 13px; }
-.cursor { display: inline-block; width: 0.6em; height: 1.1em; vertical-align: text-bottom; background: var(--fg); animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity: 0; } }
+#term { display: flex; align-items: baseline; gap: 1ch; margin: 0; }
+#cmd {
+  flex: 1; min-width: 0; padding: 0; border: 0; outline: 0; background: none;
+  font: inherit; color: var(--bright); text-shadow: inherit; caret-color: var(--amber);
+}
+#cmd::placeholder { color: var(--dim); opacity: 0.6; }
+#term-out { margin: 6px 0 16px; font: inherit; color: var(--fg); white-space: pre-wrap; }
+#term-out:empty { display: none; }
 
 @media (max-width: 600px) {
   body { font-size: 14px; }
@@ -157,7 +168,7 @@ footer { margin-top: 8px; font-size: 13px; }
 /* print: a plain black-on-white resume */
 @media print {
   body { background: #fff; color: #000; text-shadow: none; font-size: 11pt; }
-  body::after, nav, .cmd, .motd, footer, .status, .touch { display: none; }
+  body::after, #life, #term-out, nav, .cmd, .motd, footer, .status, .touch { display: none; }
   .screen { padding: 0; max-width: none; }
   h1 { width: auto; animation: none; color: #000; text-shadow: none; font-size: 40pt; }
   h3, .lede, .box > h2 { color: #000; }
