@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Graham Irwin</title>
+<meta name="description" content="Graham Irwin: computer science student at the University of Manitoba. Machine learning, data analytics, and odd side projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,600;1,400&family=VT323&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="screen">
+
+<header class="hero">
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> whoami</p>
+  <h1>GRAHAM IRWIN</h1>
+  <p class="lede">Honours computer science student (minor in math) at the University of Manitoba. I work on machine learning, data analytics and
+    side projects that probably shouldn't work, like a fruit fly's brain playing Counter-Strike.</p>
+  <p class="motd"><span class="dim">MOTD:</span> "Come what come may, time and the hour runs through the roughest day."
+    <span class="dim">— Macbeth 1.3</span></p>
+  <nav>
+    <a href="#projects">./projects</a>
+    <a href="#experience">./experience</a>
+    <a href="#education">./education</a>
+    <a href="#skills">./skills</a>
+    <a href="#contact">./contact</a>
+  </nav>
+</header>
+
+<main>
+
+<section id="projects" class="box">
+  <h2>Projects</h2>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> ls -l projects/</p>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">01</span> FlyAim</h3>
+      <p class="status">2026 → now · <b>TRAINING</b></p>
+    </header>
+    <p>Janelia's full MaleCNS v1.0 fruit fly connectome (164,866 neurons, 25.5M synapses) simulated on the GPU as a
+      leaky integrate-and-fire spiking reservoir that plays Counter-Strike 2. The synapses stay fixed. Only a linear
+      ridge-regression readout to the game's actions is learned.</p>
+    <ul class="log">
+      <li>Rewrote the simulation step as a sparse (CSR) matrix-vector product, so the full brain runs in real time at
+        the game's tick rate, and batched it to run many brains at once.</li>
+      <li>Tuned the network out of its chaotic regime and widened the readout to interneurons, which made it much
+        better at imitating a scripted teacher.</li>
+      <li>Learns online from live play (DAgger plus reward-weighted regression), and only deploys a new readout if it
+        beats the current one on unseen data. It trains through self-play across parallel headless game servers.</li>
+    </ul>
+    <ul class="tags"><li>Python</li><li>PyTorch</li><li>CUDA</li><li>C#</li><li>Spiking neural nets</li></ul>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">02</span> MTG Vec2Search</h3>
+      <p class="status"><b>LIVE</b></p>
+    </header>
+    <p>Search every Magic: The Gathering card by describing it in plain English ("cheap green elves that ramp"), or
+      paste a Commander deck to see what similar decks play that yours doesn't. It's a static site. A build step turns
+      Scryfall's bulk data and about 3,000 community oracle tags into a sharded index, so the first search downloads
+      about 200 KB and later ones a few KB. Results are ranked by IDF-weighted query coverage, and prices are shown in
+      the visitor's local currency.</p>
+    <ul class="tags"><li>JavaScript</li><li>Python</li><li>Information retrieval</li><li>Static site</li></ul>
+    <p class="links"><a href="https://grahamirwin.github.io/MTG_Vec2Search/">[ launch ]</a>
+      <a href="https://github.com/GrahamIrwin/MTG_Vec2Search">[ source ]</a></p>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">03</span> LogicParser</h3>
+      <p class="status"><b>STABLE</b></p>
+    </header>
+    <p>A Python toolkit for sentential logic. It checks whether a formula is well formed and finds its main
+      connective, and it identifies which inference rule gets from a set of premises to a conclusion. It also comes
+      with generators that produce valid and invalid formulas for testing, or for practice problems.</p>
+    <ul class="tags"><li>Python</li><li>Parsing</li><li>Formal logic</li></ul>
+    <p class="links"><a href="https://github.com/GrahamIrwin/LogicParser">[ source ]</a></p>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">04</span> NEAT Mario</h3>
+      <p class="status">2019 · <b>ARCHIVED</b></p>
+    </header>
+    <p>Evolved neural networks with NEAT (NeuroEvolution of Augmenting Topologies) to play Super Mario Bros. through
+      a Lua interface to the BizHawk emulator. It cleared World 1-1 after 62 generations and beat my own score by
+      generation 96, all within a day of training.</p>
+    <ul class="tags"><li>Lua</li><li>BizHawk</li><li>NEAT</li></ul>
+  </article>
+
+  <article class="proj">
+    <header>
+      <h3><span class="idx">05</span> RNN Music</h3>
+      <p class="status">2018 · <b>ARCHIVED</b></p>
+    </header>
+    <p>A 2-layer recurrent neural network (LSTM) trained on Scott Joplin ragtime MIDI files to compose new piano pieces
+      in his style, building on Google Magenta's TensorFlow RNN code. Each timestep is modelled as 88 binary
+      key-pressed predictions over a piano roll.</p>
+    <ul class="tags"><li>Python</li><li>TensorFlow</li><li>LSTM</li></ul>
+  </article>
+</section>
+
+<section id="experience" class="box">
+  <h2>Experience</h2>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> tail /var/log/career</p>
+
+  <div class="job">
+    <p class="when">2026-05 → 2026-06</p>
+    <h3>Student Research Assistant <span class="dim">@ UManitoba Mathematics</span></h3>
+    <ul>
+      <li>Built an open textbook (PreTeXt) and interactive JavaScript tools (truth tables, Euclidean algorithm, graph
+        isomorphism, relations) for MATH 1240 Discrete Mathematics.</li>
+      <li>Funded by the Philip Hultin Pedagogy Fund (OER grant), supervised by Dr. Andrii Arman.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="when">2025-01 → 2026-04</p>
+    <h3>Teaching Assistant, COMP 1600 <span class="dim">@ University of Manitoba</span></h3>
+    <ul>
+      <li>Assisted in lectures, invigilated and marked weekly tests for 150 students, and assessed group
+        presentations.</li>
+    </ul>
+  </div>
+
+  <div class="job">
+    <p class="when">2022-03 → 2023-09</p>
+    <h3>Data Analyst <span class="dim">@ EQ3</span></h3>
+    <ul>
+      <li>Analysed business data with Python and SQL, built stakeholder reports, and maintained backend databases.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="education" class="box">
+  <h2>Education</h2>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> cat education.txt</p>
+  <div class="job">
+    <p class="when">expected 2027-12</p>
+    <h3>B.Sc. Honours, Computer Science <span class="dim">@ University of Manitoba</span></h3>
+    <ul>
+      <li>Minor in Mathematics. GPA 3.52.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="skills" class="box">
+  <h2>Skills</h2>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> cat skills.cfg</p>
+  <dl class="kv">
+    <dt>LANGUAGES</dt><dd>Python, Java, C#, JavaScript/TypeScript, SQL, Lua, LaTeX</dd>
+    <dt>ML &amp; DATA</dt><dd>PyTorch, TensorFlow, NumPy, pandas, Matplotlib, sparse GPU computation (CUDA)</dd>
+    <dt>TOOLS</dt><dd>Git/GitHub, MySQL, BigQuery, Excel</dd>
+  </dl>
+</section>
+
+<section id="contact" class="box">
+  <h2>Contact</h2>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> ping graham</p>
+  <p class="touch">Get in t<a class="egg" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">ouch</a>:</p>
+  <dl class="kv">
+    <dt>EMAIL</dt><dd><a href="mailto:irwing1@myumanitoba.ca">irwing1@myumanitoba.ca</a></dd>
+    <dt>EMAIL</dt><dd><a href="mailto:grahamjamesirwin@gmail.com">grahamjamesirwin@gmail.com</a></dd>
+    <dt>GITHUB</dt><dd><a href="https://github.com/GrahamIrwin">github.com/GrahamIrwin</a></dd>
+    <dt>REFERENCES</dt><dd>available on request</dd>
+  </dl>
+</section>
+
+</main>
+
+<footer>
+  <p class="cmd"><span class="ps1">guest@grahamirwin:~$</span> <span class="cursor" aria-hidden="true"></span></p>
+  <p class="dim">[ EOF ] · hand-written HTML &amp; CSS · print this page for a plain resume</p>
+</footer>
+
+</div>
+</body>
+</html>
