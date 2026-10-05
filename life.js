@@ -1,7 +1,7 @@
 // Conway's Game of Life in the background, driven by the footer terminal.
 // Cheap on purpose: one coarse grid (~14px cells), ~8 steps/s, nothing runs while the tab is hidden.
 (() => {
-  const CELL = 14, STEP_MS = 125;
+  const CELL = 14, BASE_MS = 125;
   const DIM = 'rgba(150, 245, 170, 0.05)', NEW = 'rgba(190, 255, 205, 0.18)';
 
   const PATTERNS = {
@@ -32,8 +32,7 @@
     screen.colorDepth, devicePixelRatio, Intl.DateTimeFormat().resolvedOptions().timeZone, first].join('|');
   let h = 0x811c9dc5;  // FNV-1a
   for (let i = 0; i < traits.length; i++) h = Math.imul(h ^ traits.charCodeAt(i), 0x01000193);
-  const SEED = h >>> 0;
-  let s = SEED;
+  let universe = h >>> 0, s = universe, speed = 1;
   const rand = () => {  // mulberry32
     s = (s + 0x6d2b79f5) | 0;
     let t = Math.imul(s ^ (s >>> 15), 1 | s);
@@ -58,8 +57,15 @@
     draw();
   }
 
+  // each cell hashes (universe, x, y), so a shared universe starts the same on any screen size
   function seed(density = 0.18) {
-    for (let i = 0; i < cur.length; i++) { cur[i] = rand() < density ? 1 : 0; age[i] = 9; }
+    for (let i = 0; i < cur.length; i++) {
+      let t = universe ^ Math.imul(i % cols, 0x27d4eb2d) ^ Math.imul((i / cols) | 0, 0x165667b1);
+      t = Math.imul(t ^ (t >>> 15), 0x2c1b3c6d);
+      t = Math.imul(t ^ (t >>> 12), 0x297a2d39);
+      cur[i] = ((t ^ (t >>> 15)) >>> 0) / 4294967296 < density ? 1 : 0;
+      age[i] = 9;
+    }
   }
 
   function step() {
@@ -103,9 +109,9 @@
     timer = null;
     if (paused || document.hidden) return;
     step(); draw();
-    timer = setTimeout(tick, STEP_MS);
+    timer = setTimeout(tick, BASE_MS / speed);
   }
-  const run = () => { if (!timer) timer = setTimeout(tick, STEP_MS); };
+  const run = () => { if (!timer) timer = setTimeout(tick, BASE_MS / speed); };
 
   // ---- terminal ----
   const form = document.getElementById('term'), input = document.getElementById('cmd'), out = document.getElementById('term-out');
@@ -113,21 +119,37 @@
   const names = Object.keys(PATTERNS).join(' ');
 
   function exec(line) {
-    const m = line.trim().toLowerCase().match(/^([a-z]+)\s*(?:\(\s*(-?\d+)\s*,\s*(-?\d+)\s*\)|\s+(-?\d+)[\s,]+(-?\d+))?$/);
+    // cmd, cmd a b, cmd(a,b)
+    const m = line.trim().toLowerCase().match(/^([a-z]+)\s*(?:\(([^)]*)\)|\s(.*))?$/);
     if (!m) return say(`> can't parse "${line}". try help`);
-    const [, cmd, ax, ay, bx, by] = m, x = ax ?? bx, y = ay ?? by;
+    const cmd = m[1], args = (m[2] ?? m[3] ?? '').split(/[\s,]+/).filter(Boolean);
+    const hex = n => '#' + n.toString(16).padStart(8, '0');
     if (PATTERNS[cmd]) {
+      const [x, y] = args.map(Number);
+      if (args.length && (args.length !== 2 || !Number.isInteger(x) || !Number.isInteger(y))) return say(`> usage: ${cmd}(x,y)`);
       manual = true;
-      const [px, py] = x == null ? place(cmd) : place(cmd, +x, +y);
+      const [px, py] = args.length ? place(cmd, x, y) : place(cmd);
       return say(`> spawned ${cmd} at (${px}, ${py})`);
     }
     switch (cmd) {
       case 'help': return say('> this background is Conway\'s Game of Life.',
         `> patterns: ${names}`, '> place one: glider(10,5) or glider 10 5, or just glider for anywhere',
-        `> also: seed, clear, pause, play. grid is ${cols}x${rows}, (0,0) is top-left`,
-        `> your universe: #${SEED.toString(16).padStart(8, '0')}, from your browser and first visit`);
+        '> also: seed [hex], speed(x), clear, pause, play',
+        `> grid is ${cols}x${rows}, (0,0) is top-left. universe ${hex(universe)}, share it with seed ${hex(universe)}`);
       case 'ls': return say(`> ${names}`);
-      case 'seed': manual = false; seed(); draw(); return say('> reseeded');
+      case 'seed': {
+        if (args.length && !/^(#|0x)?[0-9a-f]{1,8}$/.test(args[0])) return say('> usage: seed or seed #d23d2fc8');
+        universe = args.length ? parseInt(args[0].replace(/^(#|0x)/, ''), 16) : (rand() * 4294967296) >>> 0;
+        manual = false; seed(); draw();
+        return say(`> universe ${hex(universe)}`);
+      }
+      case 'speed': {
+        const x = Number(args[0]);
+        if (!args.length) return say(`> speed ${speed}`);
+        if (!(x >= 0.1 && x <= 10)) return say('> usage: speed(x), 0.1 to 10, normal is 1');
+        speed = x; clearTimeout(timer); timer = null; run();
+        return say(`> speed ${speed}`);
+      }
       case 'clear': manual = true; cur.fill(0); draw(); out.textContent = ''; return;
       case 'pause': paused = true; return say('> paused. play to resume');
       case 'play': paused = false; run(); return say('> running');

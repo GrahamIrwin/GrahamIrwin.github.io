@@ -52,7 +52,11 @@ body::after {
 a { color: var(--amber); text-decoration: none; text-shadow: 0 0 6px rgb(255 181 71 / 0.4); }
 a:hover, a:focus-visible { background: var(--amber); color: var(--bg); text-shadow: none; outline: none; }
 
-.screen { max-width: 860px; margin: 0 auto; padding: 48px 16px 64px; }
+/* darker, feathered band behind the content column so Life stays loud in the margins and quiet behind text */
+.screen {
+  max-width: 860px; margin: 0 auto; padding: 48px 16px 64px;
+  background: linear-gradient(90deg, transparent, rgb(5 10 6 / 0.8) 48px, rgb(5 10 6 / 0.8) calc(100% - 48px), transparent);
+}
 
 .dim { color: var(--dim); }
 .cmd { color: var(--dim); margin: 0 0 1.2em; }
@@ -85,7 +89,7 @@ nav a::before { content: "> "; color: var(--dim); }
 .box {
   position: relative;
   border: 1px solid var(--line);
-  background: rgb(8 18 10 / 0.6);
+  background: rgb(8 18 10 / 0.85);
   padding: 32px 24px 20px;
   margin: 0 0 48px;
   scroll-margin-top: 24px;
@@ -169,7 +173,7 @@ footer { margin-top: 8px; font-size: 13px; }
 @media print {
   body { background: #fff; color: #000; text-shadow: none; font-size: 11pt; }
   body::after, #life, #term-out, nav, .cmd, .motd, footer, .status, .touch { display: none; }
-  .screen { padding: 0; max-width: none; }
+  .screen { padding: 0; max-width: none; background: none; }
   h1 { width: auto; animation: none; color: #000; text-shadow: none; font-size: 40pt; }
   h3, .lede, .box > h2 { color: #000; }
   a { color: #000; text-shadow: none; }
